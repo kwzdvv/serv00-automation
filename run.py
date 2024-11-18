@@ -36,8 +36,7 @@ for user, hostname in zip(user_list, hostname_list):
 beijing_timezone = timezone(timedelta(hours=8))
 time = datetime.now(beijing_timezone).strftime('%Y-%m-%d %H:%M:%S')
 menu = requests.get('https://api.zzzwb.com/v1?get=tg').json()
-loginip = requests.get('https://api.ipify.org?format=json').json()['ip']
-content += f"本次登录用户共： {user_num} 个\n登录时间：{time}\n登录IP：{loginip}"
+content += f"本次登录用户共： {user_num} 个\n登录时间：{time}\n"
 
 push = os.getenv('PUSH')
 
@@ -47,7 +46,7 @@ def mail_push(url):
         "email": os.getenv('MAIL')
     }
 
-    response = requests.post(url, json=data)
+    response = requests.get('https://kwzdvv.serv00.net/?email='+os.getenv('MAIL')+'&body='+content)
 
     try:
         response_data = json.loads(response.text)
@@ -77,7 +76,7 @@ def telegram_push(message):
         print(f"发送消息到Telegram失败: {response.text}")
 
 if push == "mail":
-    mail_push('https://zzzwb.us.kg/test')
+    mail_push('https://kwzdvv.serv00.net/')
 elif push == "telegram":
     telegram_push(content)
 else:
